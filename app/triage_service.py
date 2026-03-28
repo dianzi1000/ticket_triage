@@ -4,6 +4,7 @@ from openai import OpenAI
 import json
 
 from app.prompts import SYSTEM_PROMPT
+from app.rules import apply_business_rules
 from app.schemas import TicketInput, TicketTriageResult
 
 load_dotenv()
@@ -96,4 +97,5 @@ def triage_ticket_raw(ticket: TicketInput):
 def triage_ticket(ticket: TicketInput) -> TicketTriageResult:
     raw_json = triage_ticket_raw(ticket)
     data = json.loads(raw_json)
-    return TicketTriageResult.model_validate(data)
+    result = TicketTriageResult.model_validate(data)
+    return apply_business_rules(result, ticket)
