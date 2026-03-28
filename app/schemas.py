@@ -31,7 +31,7 @@ class RecommendedTeam(str, Enum):
     support = "support"
     billing_ops = "billing_ops"
     engineering = "engineering"
-    srer_ops = "sre_ops"
+    sre_ops = "sre_ops"
     account_management = "account_management"
 
 
