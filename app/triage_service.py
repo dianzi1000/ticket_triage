@@ -81,29 +81,58 @@ def triage_ticket_raw(ticket: TicketInput) -> str:
     return response.output_text
 
 
-def triage_ticket(ticket: TicketInput) -> TicketTriageResult:
+def _classify_ticket(ticket: TicketInput) -> TicketTriageResult:
+    """Call the AI model and validate the response, returning a result or fallback."""
     try:
         raw_json = triage_ticket_raw(ticket)
     except APITimeoutError:
         logger.error("OpenAI API call timed out after %ss", MODEL_TIMEOUT_SECONDS)
-        return apply_business_rules(fallback_result("model timeout"), ticket)
+        return fallback_result("model timeout")
     except APIError as exc:
         logger.error("OpenAI API error: %s", exc)
-        return apply_business_rules(fallback_result("model error"), ticket)
+        return fallback_result("model error")
     except Exception as exc:
         logger.exception("Unexpected error during model call: %s", exc)
-        return apply_business_rules(fallback_result("unexpected error"), ticket)
+        return fallback_result("unexpected error")
+
+    logger.info("ai_response_received", extra={"response_length": len(raw_json)})
 
     try:
         data = json.loads(raw_json)
     except (json.JSONDecodeError, TypeError) as exc:
         logger.error("Failed to parse model response as JSON: %s", exc)
-        return apply_business_rules(fallback_result("invalid model response"), ticket)
+        return fallback_result("invalid model response")
 
     try:
         result = TicketTriageResult.model_validate(data)
     except ValidationError as exc:
-        logger.error("Model response failed validation: %s", exc)
-        return apply_business_rules(fallback_result("validation error"), ticket)
+        logger.error(
+            "validation_failure",
+            extra={"error_count": exc.error_count()},
+        )
+        return fallback_result("validation error")
 
-    return apply_business_rules(result, ticket)
+    logger.info(
+        "validation_success",
+        extra={
+            "category": result.category,
+            "priority": result.priority,
+            "confidence": result.confidence,
+        },
+    )
+    return result
+
+
+def triage_ticket(ticket: TicketInput) -> TicketTriageResult:
+    result = apply_business_rules(_classify_ticket(ticket), ticket)
+    logger.info(
+        "triage_complete",
+        extra={
+            "category": result.category,
+            "priority": result.priority,
+            "needs_escalation": result.needs_escalation,
+            "recommended_team": result.recommended_team,
+            "confidence": result.confidence,
+        },
+    )
+    return result
