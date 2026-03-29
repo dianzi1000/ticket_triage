@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Charged twice for the same invoice",
+    "description": "I was billed twice for invoice #INV-2024-0891 on March 15th. Both charges of $299 appear on my credit card statement. Please refund the duplicate charge immediately.",
+    "customer_tier": "premium",
+    "product_name": "Analytics Pro"
+  },
+  {
+    "title": "Cannot reset my password",
+    "description": "I clicked the 'Forgot Password' link and received the email, but clicking the reset link gives me a '404 Not Found' error. I have tried three times over the past hour.",
+    "customer_tier": "standard",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Production system is completely down",
+    "description": "Our entire production environment stopped responding at 14:32 UTC. All API calls are returning 503 errors. This is affecting 10,000+ end users and causing revenue loss every minute. We need immediate assistance.",
+    "customer_tier": "enterprise",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Request: bulk export via API",
+    "description": "It would be very useful to have a REST endpoint that allows bulk exporting of records as CSV or JSON. Currently we have to paginate through thousands of records manually, which is slow and cumbersome.",
+    "customer_tier": "premium",
+    "product_name": "Analytics Pro"
+  },
+  {
+    "title": "Please cancel my subscription",
+    "description": "I would like to cancel my subscription effective immediately. Please confirm cancellation and ensure I am not billed again. I have already migrated my data to another provider.",
+    "customer_tier": "standard",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Monthly report export is broken",
+    "description": "When I click 'Export to PDF' on the monthly summary report, the download starts but the file is always 0 bytes and cannot be opened. This has been happening since last Tuesday's update.",
+    "customer_tier": "premium",
+    "product_name": "Analytics Pro"
+  },
+  {
+    "title": "Dashboard loading extremely slowly",
+    "description": "The main dashboard now takes 25–30 seconds to load, compared to under 2 seconds last week. Our team wastes significant time waiting. No changes were made on our end.",
+    "customer_tier": "enterprise",
+    "product_name": "Analytics Pro"
+  },
+  {
+    "title": "Account locked after too many login attempts",
+    "description": "I mistyped my password a few times and now my account is locked. The self-service unlock link in the email does not work. I need access restored urgently as I have a client demo in 30 minutes.",
+    "customer_tier": "premium",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Wrong amount charged — I am furious",
+    "description": "You charged me $999 instead of the $99 plan I selected. This is completely unacceptable. I have contacted my bank and will be disputing the charge if this is not resolved today. This is fraud.",
+    "customer_tier": "standard",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Data pipeline stopped ingesting records",
+    "description": "Our ETL pipeline has not ingested any new records since 08:00 UTC today. The pipeline status page shows 'running' but row counts are not increasing. Logs show no errors, which makes this very confusing.",
+    "customer_tier": "enterprise",
+    "product_name": "Data Connector"
+  },
+  {
+    "title": "Feature request: dark mode",
+    "description": "Many of our team members work late hours and would greatly appreciate a dark mode option in the UI. Could this be added to the product roadmap? Happy to provide design feedback if helpful.",
+    "customer_tier": "standard",
+    "product_name": "Analytics Pro"
+  },
+  {
+    "title": "Unexpected service interruption affecting all users",
+    "description": "Starting around 09:15 EST, none of our users can log in. The login page loads but submitting credentials returns a blank white page. This affects our entire organization of 500 employees.",
+    "customer_tier": "enterprise",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Invoice missing company VAT number",
+    "description": "Our last three invoices do not include our VAT registration number, which is required for accounting. Could you update the billing information on our account and reissue the invoices?",
+    "customer_tier": "premium",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "CSV import fails silently",
+    "description": "When I upload a CSV file larger than 5 MB, the progress bar completes but no records are imported and no error message is shown. Smaller files under 1 MB work fine.",
+    "customer_tier": "standard",
+    "product_name": "Data Connector"
+  },
+  {
+    "title": "Suggestion: keyboard shortcuts for common actions",
+    "description": "Adding keyboard shortcuts for frequently used actions like creating a new ticket, saving drafts, and navigating between views would speed up our workflow considerably.",
+    "customer_tier": "premium",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Two-factor authentication codes not arriving",
+    "description": "I set up 2FA via SMS but the verification codes stopped arriving yesterday. I cannot log into my account. I have tried resending the code multiple times with no success.",
+    "customer_tier": "standard",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Downgrade plan before next billing cycle",
+    "description": "We need to downgrade from the Enterprise plan to the Premium plan before our renewal date of April 1st. Could you confirm the prorated refund amount and process the change?",
+    "customer_tier": "enterprise",
+    "product_name": "Core Platform"
+  },
+  {
+    "title": "Charts showing incorrect date ranges",
+    "description": "The time-series charts on the analytics dashboard consistently show data one day off. For example, selecting 'March 20' displays data from March 19. This seems like a timezone bug.",
+    "customer_tier": "premium",
+    "product_name": "Analytics Pro"
+  },
+  {
+    "title": "API rate limits too restrictive for our use case",
+    "description": "We hit the 1,000 requests/hour API rate limit regularly during business hours. Our integration requires at least 5,000 requests/hour. Is there a higher-tier plan or a way to increase the limit?",
+    "customer_tier": "enterprise",
+    "product_name": "Data Connector"
+  },
+  {
+    "title": "Notification emails going to spam",
+    "description": "All automated notification emails from your platform are landing in our users' spam folders. Our IT team has checked and there are no rules blocking them. Could there be an issue with your sending domain?",
+    "customer_tier": "standard",
+    "product_name": "Core Platform"
+  }
+]
