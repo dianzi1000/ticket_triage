@@ -62,6 +62,7 @@ Client
 │  • "production down" in title → urgent          │
 │  • Enterprise + angry + high → escalate         │
 │  • Confidence < 0.65 → escalate                 │
+│  • Billing category → route to billing_ops      │
 └───────────────────┬─────────────────────────────┘
                     │ final result
                     ▼
@@ -200,6 +201,8 @@ Sending a ticket with a title shorter than 3 characters returns:
 - **Single model, single prompt** — all ticket types are handled by one prompt. Edge-case categories (e.g. legal, GDPR requests) may be mis-classified as `other`.
 - **No retry logic** — transient OpenAI errors produce an immediate fallback; there is no exponential back-off or retry queue.
 - **English-only** — the system prompt and validation are tuned for English-language tickets; other languages may yield lower-confidence results.
+- **Prompt brittleness** — classification quality is sensitive to prompt wording. Small prompt edits can shift category or priority outputs in unexpected ways; there is no automated regression suite to catch prompt-level regressions.
+- **Mocked tests, no live evals** — the test suite patches the OpenAI client with fixed fixtures, so tests pass without an API key. There is currently no end-to-end evaluation harness that measures real model accuracy or catches regressions when the underlying model is updated.
 
 ---
 

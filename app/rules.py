@@ -28,4 +28,8 @@ def apply_business_rules(result: TicketTriageResult, ticket: TicketInput) -> Tic
     if result.confidence < 0.65:
         result = result.model_copy(update={"needs_escalation": True})
 
+    # Rule 5: Billing category → route to billing_ops team
+    if result.category == TicketCategory.billing:
+        result = result.model_copy(update={"recommended_team": RecommendedTeam.billing_ops})
+
     return result
