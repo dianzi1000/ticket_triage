@@ -28,7 +28,7 @@ _client: OpenAI | None = None
 
 
 def _get_client() -> OpenAI:
-    """Lazily initialise the OpenAI client so import succeeds without a key."""
+    """Lazily initialize the OpenAI client so import succeeds without a key."""
     global _client
     if _client is None:
         api_key = os.getenv("OPENAI_API_KEY")
