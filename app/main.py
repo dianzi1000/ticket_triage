@@ -50,6 +50,11 @@ async def generic_exception_handler(
     )
 
 
+@app.get("/health")
+def health_check() -> dict:
+    return {"status": "ok"}
+
+
 @app.post("/triage", response_model=TicketTriageResult)
 def triage(ticket: TicketInput) -> TicketTriageResult:
     logger.info(
