@@ -1,12 +1,15 @@
 import logging
+import time
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+from app.logging_config import configure_logging
 from app.schemas import TicketInput, TicketTriageResult
 from app.triage_service import triage_ticket
 
+configure_logging()
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Ticket Triage Service")
@@ -24,6 +27,10 @@ async def validation_exception_handler(
                 "message": error["msg"],
             }
         )
+    logger.warning(
+        "input_validation_failed",
+        extra={"path": request.url.path, "errors": errors},
+    )
     return JSONResponse(
         status_code=422,
         content={"detail": "Invalid ticket input", "errors": errors},
@@ -43,4 +50,17 @@ async def generic_exception_handler(
 
 @app.post("/triage", response_model=TicketTriageResult)
 def triage(ticket: TicketInput) -> TicketTriageResult:
-    return triage_ticket(ticket)
+    logger.info(
+        "incoming_request",
+        extra={
+            "ticket_title": ticket.title[:120],
+            "customer_tier": ticket.customer_tier,
+            "product_name": ticket.product_name,
+            "description_length": len(ticket.description),
+        },
+    )
+    start = time.perf_counter()
+    result = triage_ticket(ticket)
+    duration_ms = round((time.perf_counter() - start) * 1000, 2)
+    logger.info("request_complete", extra={"duration_ms": duration_ms})
+    return result
