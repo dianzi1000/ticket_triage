@@ -24,4 +24,8 @@ def apply_business_rules(result: TicketTriageResult, ticket: TicketInput) -> Tic
     ):
         result = result.model_copy(update={"needs_escalation": True})
 
+    # Rule 4: Low confidence → flag for human review
+    if result.confidence < 0.65:
+        result = result.model_copy(update={"needs_escalation": True})
+
     return result
