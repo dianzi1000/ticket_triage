@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from openai import APITimeoutError, APIError, OpenAI
 from pydantic import ValidationError
 
+from app.database import init_db, save_triage_result
 from app.prompts import SYSTEM_PROMPT
 from app.response_schemas import TICKET_TRIAGE_SCHEMA
 from app.rules import apply_business_rules
@@ -124,7 +125,9 @@ def _classify_ticket(ticket: TicketInput) -> TicketTriageResult:
 
 
 def triage_ticket(ticket: TicketInput) -> TicketTriageResult:
-    result = apply_business_rules(_classify_ticket(ticket), ticket)
+    model_result = _classify_ticket(ticket)
+    result = apply_business_rules(model_result, ticket)
+    save_triage_result(ticket, model_result, result)
     logger.info(
         "triage_complete",
         extra={

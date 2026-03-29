@@ -6,10 +6,12 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from app.logging_config import configure_logging
+from app.database import init_db
 from app.schemas import TicketInput, TicketTriageResult
 from app.triage_service import triage_ticket
 
 configure_logging()
+init_db()
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Ticket Triage Service")

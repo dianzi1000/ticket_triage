@@ -168,6 +168,42 @@ class TestRule3EnterpriseAngryHigh:
 
 
 # ---------------------------------------------------------------------------
+# Rule 4: Low confidence (< 0.65) → needs_escalation = True
+# ---------------------------------------------------------------------------
+
+class TestRule4LowConfidence:
+    def test_confidence_below_threshold_sets_escalation(self):
+        result = make_result(confidence=0.64, needs_escalation=False)
+        ticket = make_ticket()
+        out = apply_business_rules(result, ticket)
+        assert out.needs_escalation is True
+
+    def test_confidence_at_threshold_does_not_escalate(self):
+        result = make_result(confidence=0.65, needs_escalation=False)
+        ticket = make_ticket()
+        out = apply_business_rules(result, ticket)
+        assert out.needs_escalation is False
+
+    def test_confidence_above_threshold_does_not_escalate(self):
+        result = make_result(confidence=0.9, needs_escalation=False)
+        ticket = make_ticket()
+        out = apply_business_rules(result, ticket)
+        assert out.needs_escalation is False
+
+    def test_zero_confidence_sets_escalation(self):
+        result = make_result(confidence=0.0, needs_escalation=False)
+        ticket = make_ticket()
+        out = apply_business_rules(result, ticket)
+        assert out.needs_escalation is True
+
+    def test_low_confidence_keeps_escalation_when_already_true(self):
+        result = make_result(confidence=0.5, needs_escalation=True)
+        ticket = make_ticket()
+        out = apply_business_rules(result, ticket)
+        assert out.needs_escalation is True
+
+
+# ---------------------------------------------------------------------------
 # Combined / edge cases
 # ---------------------------------------------------------------------------
 
